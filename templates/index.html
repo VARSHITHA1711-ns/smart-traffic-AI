@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI-Powered Adaptive Traffic Management & Junction Optimization</title>
+  
+  <!-- Modern Typography Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;800&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="/static/css/components.css">
+
+  <!-- Chart.js CDN for telemetry analytics -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <!-- TOP HEADER CONTROL CENTER BAR -->
+  <header class="header-bar">
+    <div class="brand-section">
+      <div class="brand-icon">🚦</div>
+      <div>
+        <h1 class="brand-title">AI-Powered Adaptive Traffic Management</h1>
+        <div class="brand-subtitle">Junction Optimization for Mixed Traffic • Indian Smart City Edition</div>
+      </div>
+    </div>
+
+    <div class="header-telemetry">
+      <div class="telemetry-pill live-dot">
+        <span>AI Decision Engine: <strong>ACTIVE</strong></span>
+      </div>
+
+      <div class="telemetry-pill">
+        <span>Mode: <strong id="headerModeBadge" style="color: var(--color-cyan);">NORMAL</strong></span>
+      </div>
+
+      <div id="headerEmergencyBeacon" class="emergency-beacon">
+        <span>🚨 EMERGENCY GREEN CORRIDOR ENGAGED</span>
+      </div>
+
+      <button id="btnToggleAudio" class="btn-header">🔇 Sound OFF</button>
+      <button id="btnStartTour" class="btn-header btn-primary-action">✨ 12-Step Demo Tour</button>
+    </div>
+  </header>
+
+  <!-- 12-TAB NAVIGATION STRIP -->
+  <nav class="nav-tab-strip">
+    <button class="nav-tab active" data-target="dashboard">
+      <span>📊</span> Dashboard
+    </button>
+    <button class="nav-tab" data-target="live-junction">
+      <span>🚦</span> Live Junction
+    </button>
+    <button class="nav-tab" data-target="ai-control">
+      <span>⚙️</span> AI Signal Control
+    </button>
+    <button class="nav-tab" data-target="free-left">
+      <span>↩️</span> Free-Left Safety
+    </button>
+    <button class="nav-tab" data-target="pedestrians">
+      <span>🚶</span> Pedestrian Priority
+    </button>
+    <button class="nav-tab" data-target="emergency">
+      <span>🚑</span> Emergency Corridor
+    </button>
+    <button class="nav-tab" data-target="events">
+      <span>📅</span> Event Management
+    </button>
+    <button class="nav-tab" data-target="prediction">
+      <span>🔮</span> Prediction Engine
+    </button>
+    <button class="nav-tab" data-target="analytics">
+      <span>📈</span> Analytics & Trends
+    </button>
+    <button class="nav-tab" data-target="simulation">
+      <span>🎮</span> Simulation Sandbox
+    </button>
+    <button class="nav-tab" data-target="reports">
+      <span>📋</span> Reports & Compare
+    </button>
+    <button class="nav-tab" data-target="settings">
+      <span>🛠️</span> System Settings
+    </button>
+  </nav>
+
+  <!-- MAIN APP CONTAINER -->
+  <main class="app-container">
+
+    <!-- AI ADVISOR RECOMMENDATION BANNER -->
+    <section class="advisor-banner">
+      <div class="advisor-content">
+        <span class="advisor-tag">AI Advisor</span>
+        <span id="advisorBannerText">Analyzing 4-approach mixed traffic flow and pedestrian crossing demand...</span>
+      </div>
+      <div style="font-size: 11px; color: var(--text-dim); font-family: var(--font-mono);">
+        LATENCY: 12ms • AUTONOMOUS MODE
+      </div>
+    </section>
+
+    <!-- 12 PREDEFINED DEMO SCENARIOS BAR -->
+    <section class="scenario-quickbar">
+      <span class="scenario-label">Quick Scenarios:</span>
+      <button class="scenario-chip" data-scenario="1">1. Normal Traffic</button>
+      <button class="scenario-chip" data-scenario="2">2. Peak Hour</button>
+      <button class="scenario-chip" data-scenario="3">3. Heavy Mixed Traffic</button>
+      <button class="scenario-chip" data-scenario="4">4. Festival Crowd</button>
+      <button class="scenario-chip" data-scenario="5">5. Weekend Crowd</button>
+      <button class="scenario-chip" data-scenario="6">6. Religious Event</button>
+      <button class="scenario-chip" data-scenario="7">7. Stadium Surge</button>
+      <button class="scenario-chip" data-scenario="8">8. Ambulance Priority</button>
+      <button class="scenario-chip" data-scenario="9">9. Free-Left Conflict</button>
+      <button class="scenario-chip" data-scenario="10">10. Unequal Traffic</button>
+      <button class="scenario-chip" data-scenario="11">11. Congestion Predicted</button>
+      <button class="scenario-chip" data-scenario="12">12. Emergency + Crowd</button>
+    </section>
+
+    <!-- 12-STEP GUIDED DEMONSTRATION TOUR BANNER -->
+    <section id="demoTourBanner" class="tour-banner" style="display: none;">
+      <div class="tour-info">
+        <h4 id="tourStepTitle">[1/12] STEP 1: Baseline Normal Traffic</h4>
+        <p id="tourStepDesc">Initializing normal 4-way balanced mixed traffic flow.</p>
+      </div>
+      <div class="tour-actions">
+        <button id="btnTourPrev" class="btn-secondary" style="padding: 6px 12px; font-size: 12px;">◀ Previous</button>
+        <button id="btnTourPlay" class="btn-secondary" style="padding: 6px 12px; font-size: 12px;">▶ Auto-Play Tour</button>
+        <button id="btnTourNext" class="btn-primary" style="padding: 6px 14px; font-size: 12px;">Next Step ➔</button>
+        <button id="btnTourExit" class="btn-secondary" style="padding: 6px 10px; font-size: 12px;">✕ Close</button>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         VIEW 1: DASHBOARD (EXECUTIVE OVERVIEW)
+         ==================================================================== -->
+    <section id="view-dashboard" class="view-section active">
+      <!-- KPI GRID -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-title">Active Vehicles</span>
+            <span class="kpi-icon">🚗</span>
+          </div>
+          <div class="kpi-value-row">
+            <span id="kpiTotalVehicles" class="kpi-value">0</span>
+            <span class="kpi-unit">PCU</span>
+          </div>
+          <div class="kpi-trend"><span>●</span> Mixed Traffic Fleet</div>
+        </div>
+
+        <div class="kpi-card pedestrian-accent">
+          <div class="kpi-header">
+            <span class="kpi-title">Pedestrian Crowd</span>
+            <span class="kpi-icon">🚶</span>
+          </div>
+          <div class="kpi-value-row">
+            <span id="kpiTotalPedestrians" class="kpi-value">0</span>
+            <span class="kpi-unit">People</span>
+          </div>
+          <div class="kpi-trend"><span>●</span> Crowd-Aware Tracking</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-title">Avg Waiting Time</span>
+            <span class="kpi-icon">⏱️</span>
+          </div>
+          <div class="kpi-value-row">
+            <span id="kpiAvgWait" class="kpi-value">0s</span>
+            <span class="kpi-unit">Across 4 Arms</span>
+          </div>
+          <div class="kpi-trend"><span>↓</span> -45% vs Traditional Fixed</div>
+        </div>
+
+        <div class="kpi-card congestion-accent">
+          <div class="kpi-header">
+            <span class="kpi-title">Average Queue</span>
+            <span class="kpi-icon">🛑</span>
+          </div>
+          <div class="kpi-value-row">
+            <span id="kpiAvgQueue" class="kpi-value">0</span>
+            <span class="kpi-unit">Vehicles</span>
+          </div>
+          <div class="kpi-trend"><span>↓</span> Anti-Gridlock Guard</div>
+        </div>
+
+        <div class="kpi-card safety-accent">
+          <div class="kpi-header">
+            <span class="kpi-title">Junction Safety Score</span>
+            <span class="kpi-icon">🛡️</span>
+          </div>
+          <div class="kpi-value-row">
+            <span id="kpiSafetyScore" class="kpi-value" style="color: var(--color-green);">95/100</span>
+          </div>
+          <div class="kpi-trend"><span>✓</span> Zero Slip-Lane Conflicts</div>
+        </div>
+
+        <div class="kpi-card efficiency-accent">
+          <div class="kpi-header">
+            <span class="kpi-title">Traffic Efficiency</span>
+            <span class="kpi-icon">⚡</span>
+          </div>
+          <div class="kpi-value-row">
+            <span id="kpiEfficiency" class="kpi-value" style="color: var(--color-cyan);">88%</span>
+          </div>
+          <div class="kpi-trend"><span>↑</span> Dynamic Green Utilization</div>
+        </div>
+      </div>
+
+      <!-- 4-APPROACH TELEMETRY CARDS -->
+      <div class="approaches-grid">
+        <!-- North Approach -->
+        <div id="cardApp-North" class="approach-card">
+          <div class="approach-head">
+            <div class="approach-title">
+              <span>⬆️</span> North Approach
+            </div>
+            <div class="approach-badge-group">
+              <span id="sigPill-North" class="signal-status-pill red">RED</span>
+            </div>
+          </div>
+          <div class="density-bar-container">
+            <div class="density-label-row">
+              <span style="color: var(--text-muted);">Traffic Density</span>
+              <span id="densityBadge-North" class="free-left-badge active">🟢 LOW</span>
+            </div>
+            <div class="density-track">
+              <div id="densityFill-North" class="density-fill low" style="width: 25%;"></div>
+            </div>
+          </div>
+          <div class="metrics-row">
+            <div class="mini-metric-item"><div class="label">Count</div><div id="vehCount-North" class="val">0</div></div>
+            <div class="mini-metric-item"><div class="label">Queue</div><div id="queueLen-North" class="val">0</div></div>
+            <div class="mini-metric-item"><div class="label">Wait Time</div><div id="waitTime-North" class="val">0s</div></div>
+          </div>
+          <div class="sub-state-row">
+            <span class="state-tag">Free-Left: <span id="flBadge-North" class="free-left-badge active">ACTIVE</span></span>
+            <span class="state-tag">Pedestrians: <span id="pedCount-North" style="color: #c084fc;">0</span></span>
+          </div>
+          <div id="vehChips-North" class="vehicle-chips-row"></div>
+        </div>
+
+        <!-- South Approach -->
+        <div id="cardApp-South" class="approach-card">
+          <div class="approach-head">
+            <div class="approach-title">
+              <span>⬇️</span> South Approach
+            </div>
+            <div class="approach-badge-group">
+              <span id="sigPill-South" class="signal-status-pill red">RED</span>
+            </div>
+          </div>
+          <div class="density-bar-container">
+            <div class="density-label-row">
+              <span style="color: var(--text-muted);">Traffic Density</span>
+              <span id="densityBadge-South" class="free-left-badge active">🟢 LOW</span>
+            </div>
+            <div class="density-track">
+              <div id="densityFill-South" class="density-fill low" style="width: 25%;"></div>
+            </div>
+          </div>
+          <div class="metrics-row">
+            <div class="mini-metric-item"><div class="label">Count</div><div id="vehCount-South" class="val">0</div></div>
+            <div class="mini-metric-item"><div class="label">Queue</div><div id="queueLen-South" class="val">0</div></div>
+            <div class="mini-metric-item"><div class="label">Wait Time</div><div id="waitTime-South" class="val">0s</div></div>
+          </div>
+          <div class="sub-state-row">
+            <span class="state-tag">Free-Left: <span id="flBadge-South" class="free-left-badge active">ACTIVE</span></span>
+            <span class="state-tag">Pedestrians: <span id="pedCount-South" style="color: #c084fc;">0</span></span>
+          </div>
+          <div id="vehChips-South" class="vehicle-chips-row"></div>
+        </div>
+
+        <!-- East Approach -->
+        <div id="cardApp-East" class="approach-card">
+          <div class="approach-head">
+            <div class="approach-title">
+              <span>➡️</span> East Approach
+            </div>
+            <div class="approach-badge-group">
+              <span id="sigPill-East" class="signal-status-pill red">RED</span>
+            </div>
+          </div>
+          <div class="density-bar-container">
+            <div class="density-label-row">
+              <span style="color: var(--text-muted);">Traffic Density</span>
+              <span id="densityBadge-East" class="free-left-badge active">🟢 LOW</span>
+            </div>
+            <div class="density-track">
+              <div id="densityFill-East" class="density-fill low" style="width: 25%;"></div>
+            </div>
+          </div>
+          <div class="metrics-row">
+            <div class="mini-metric-item"><div class="label">Count</div><div id="vehCount-East" class="val">0</div></div>
+            <div class="mini-metric-item"><div class="label">Queue</div><div id="queueLen-East" class="val">0</div></div>
+            <div class="mini-metric-item"><div class="label">Wait Time</div><div id="waitTime-East" class="val">0s</div></div>
+          </div>
+          <div class="sub-state-row">
+            <span class="state-tag">Free-Left: <span id="flBadge-East" class="free-left-badge active">ACTIVE</span></span>
+            <span class="state-tag">Pedestrians: <span id="pedCount-East" style="color: #c084fc;">0</span></span>
+          </div>
+          <div id="vehChips-East" class="vehicle-chips-row"></div>
+        </div>
+
+        <!-- West Approach -->
+        <div id="cardApp-West" class="approach-card">
+          <div class="approach-head">
+            <div class="approach-title">
+              <span>⬅️</span> West Approach
+            </div>
+            <div class="approach-badge-group">
+              <span id="sigPill-West" class="signal-status-pill red">RED</span>
+            </div>
+          </div>
+          <div class="density-bar-container">
+            <div class="density-label-row">
+              <span style="color: var(--text-muted);">Traffic Density</span>
+              <span id="densityBadge-West" class="free-left-badge active">🟢 LOW</span>
+            </div>
+            <div class="density-track">
+              <div id="densityFill-West" class="density-fill low" style="width: 25%;"></div>
+            </div>
+          </div>
+          <div class="metrics-row">
+            <div class="mini-metric-item"><div class="label">Count</div><div id="vehCount-West" class="val">0</div></div>
+            <div class="mini-metric-item"><div class="label">Queue</div><div id="queueLen-West" class="val">0</div></div>
+            <div class="mini-metric-item"><div class="label">Wait Time</div><div id="waitTime-West" class="val">0s</div></div>
+          </div>
+          <div class="sub-state-row">
+            <span class="state-tag">Free-Left: <span id="flBadge-West" class="free-left-badge active">ACTIVE</span></span>
+            <span class="state-tag">Pedestrians: <span id="pedCount-West" style="color: #c084fc;">0</span></span>
+          </div>
+          <div id="vehChips-West" class="vehicle-chips-row"></div>
+        </div>
+      </div>
+
+      <!-- INTERACTIVE CANVAS JUNCTION (SHARED LIVE RENDER) -->
+      <div id="dashboardCanvasHost">
+        <div id="junctionCanvasWrapper" class="canvas-wrapper">
+          <div class="canvas-toolbar">
+            <div class="canvas-toolbar-group">
+              <button id="btnToggleBBoxes" class="canvas-btn active">🎯 AI YOLO Bounding Boxes</button>
+              <select id="cameraAngleSelect" class="canvas-btn" style="background: rgba(10, 16, 30, 0.85); color: #fff; border: 1px solid var(--border-subtle);">
+                <option value="OVERVIEW">📷 Camera: 4-Way Overview</option>
+                <option value="NORTH">📷 Camera: North Arterial HD</option>
+                <option value="SOUTH">📷 Camera: South Corridor HD</option>
+                <option value="EAST">📷 Camera: East Main Highway</option>
+                <option value="WEST">📷 Camera: West Commercial Link</option>
+              </select>
+            </div>
+            <div class="canvas-toolbar-group">
+              <button class="canvas-btn" data-sim-speed="0.5">0.5x</button>
+              <button class="canvas-btn active" data-sim-speed="1.0">1.0x</button>
+              <button class="canvas-btn" data-sim-speed="2.0">2.0x</button>
+              <button class="canvas-btn" data-sim-speed="4.0">4.0x</button>
+            </div>
+          </div>
+          <canvas id="junctionCanvas" width="1000" height="640"></canvas>
+        </div>
+      </div>
+
+      <!-- "WHY DID AI MAKE THIS DECISION?" EXPLAINABLE AI CARD -->
+      <div id="aiDecisionCard" class="decision-card">
+        <div class="decision-head">
+          <div class="decision-title">
+            <span>🧠</span>
+            <span id="decisionTitle">Why Did AI Make This Decision?</span>
+          </div>
+          <span id="decisionTimestamp" style="font-family: var(--font-mono); font-size: 12px; color: var(--text-dim);">Live Sync</span>
+        </div>
+        <div class="decision-reasoning-box">
+          <div id="decisionStatement" class="decision-core-statement">
+            <span>⚡</span>
+            <span>Evaluating mixed PCU traffic loads and pedestrian safety interlocks across all approaches.</span>
+          </div>
+          <ul id="decisionBullets" class="decision-bullets">
+            <li><strong>Approach:</strong> East Corridor</li>
+            <li><strong>Traffic Density:</strong> 88% (CRITICAL)</li>
+            <li><strong>Queue:</strong> 24 vehicles</li>
+            <li><strong>Wait Duration:</strong> 68s</li>
+            <li><strong>Pedestrian Crossing:</strong> Safe buffer allocated</li>
+            <li><strong>Anti-Starvation:</strong> Monitored</li>
+          </ul>
+        </div>
+        <div id="decisionAction" class="decision-action-banner">
+          <span>Decision Action:</span>
+          <span>Dynamic GREEN allocated with continuous clearance feedback.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         VIEW 2: LIVE JUNCTION FULLSCREEN VIEW
+         ==================================================================== -->
+    <section id="view-live-junction" class="view-section">
+      <div class="view-header">
+        <div>
+          <h2>🚦 Real-Time Mixed Traffic Junction Visualizer</h2>
+          <p>60 FPS physics canvas showing Indian mixed vehicles, zebra crosswalks, Free-Left bypass lanes, and YOLO computer vision overlay.</p>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn-secondary" onclick="window.appController.loadScenario(4)">Spawn Festival Crowd</button>
+          <button class="btn-danger" onclick="window.appController.loadScenario(8)">🚑 Deploy Ambulance</button>
+        </div>
+      </div>
+
+      <div id="liveJunctionCanvasHost" style="min-height: 640px; margin-bottom: 20px;">
+        <!-- Junction Canvas is reparented here dynamically for fullscreen view -->
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         VIEW 3: AI TRAFFIC CONTROL & OPTIMIZATION
+         ==================================================================== -->
+    <section id="view-ai-control" class="view-section">
+      <div class="view-header">
+        <div>
+          <h2>⚙️ AI-Based Adaptive Signal Optimization & Starvation Prevention</h2>
+          <p>Dynamic green timing algorithm, passenger car unit (PCU) balancing, and fairness starvation matrix.</p>
+        </div>
+        <button id="btnToggleAi" class="btn-header active">🧠 AI Adaptive: ON</button>
+      </div>
+
+      <div class="comparison-container">
+        <div class="comparison-box ai-adaptive">
+          <h3 style="font-size: 16px; margin-bottom: 12px; color: var(--color-cyan);">⚡ Dynamic Green Allocation Formula</h3>
+          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 14px;">
+            The AI continuously computes Passenger Car Units (PCU) for Indian traffic (2-Wheeler: 0.5, Car: 1.0, Auto: 1.0, Bus: 3.0, Truck: 3.0). Signal duration is determined by:
+          </p>
+          <div style="background: rgba(0,0,0,0.4); padding: 12px; border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 12px; color: #38bdf8; margin-bottom: 12px;">
+            Green_Duration = Clamp(MinGreen + (Density% / 100) * (MaxGreen - MinGreen) + (Queue * 1.2) + (WaitTime * 0.15), 15s, 75s)
+          </div>
+          <div class="comparison-stat-row">
+            <span>Minimum Green Guard</span>
+            <strong style="color: #6ee7b7;">15 seconds</strong>
+          </div>
+          <div class="comparison-stat-row">
+            <span>Maximum Green Ceiling</span>
+            <strong style="color: #38bdf8;">75 seconds</strong>
+          </div>
+          <div class="comparison-stat-row">
+            <span>Yellow Transition Phase</span>
+            <strong style="color: #fcd34d;">3 seconds</strong>
+          </div>
+        </div>
+
+        <div class="comparison-box">
+          <h3 style="font-size: 16px; margin-bottom: 12px; color: #f59e0b;">🛡️ Anti-Starvation Maximum Wait Rule</h3>
+          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 14px;">
+            Even if a major arterial road (e.g. East) has overwhelming traffic, low-traffic approaches (e.g. North) are never starved indefinitely. Once wait time exceeds 75s, priority is forced.
+          </p>
+          <div class="comparison-stat-row">
+            <span>Starvation Threshold Limit</span>
+            <strong style="color: #f87171;">75 seconds</strong>
+          </div>
+          <div class="comparison-stat-row">
+            <span>Fairness Override Status</span>
+            <strong style="color: #34d399;">Active Guard Active</strong>
+          </div>
+          <div class="comparison-stat-row">
+            <span>Current Max Wait Approach</span>
+            <strong id="aiStarveCandidate" style="color: var(--color-cyan);">Balancing Dynamically</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- RECENT DECISION AUDIT LOG -->
+      <div class="kpi-card" style="margin-top: 20px;">
+        <h3 style="font-size: 16px; margin-bottom: 12px;">📋 Live AI Decision History & Explainability Audit Log</h3>
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Decision Type</th>
+              <th>Approach</th>
+              <th>Calculated Reason</th>
+              <th>Action Taken</th>
+            </tr>
+          </thead>
+          <tbody id="decisionsHistoryBody">
+            <!-- Dynamically populated from SQLite -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         VIEW 4: FREE-LEFT SAFETY MANAGEMENT
+         ==================================================================== -->
+    <section id="view-free-left" class="view-section">
+      <div class="view-header">
+        <div>
+          <h2>↩️ Intelligent Free-Left Turn Management</h2>
+          <p>Dedicated slip-lane monitor preventing pedestrian accidents and merge collisions through dynamic Active / Controlled / Blocked signals.</p>
+        </div>
+        <button id="btnToggleSmartFL" class="btn-header active">↩️ Smart Free-Left: ON</button>
+      </div>
+
+      <div class="free-left-grid">
+        <div id="flViewCard-North" class="free-left-card">
+          <h4>North Slip Lane (North ➔ West)</h4>
+          <div class="free-left-status-display">
+            <span>State:</span>
+            <span id="flViewBadge-North" class="free-left-badge active">ACTIVE</span>
+          </div>
+          <p id="flViewReason-North" style="font-size: 12px; color: var(--text-muted);">No pedestrians in conflict zone. Safe free left flow.</p>
+        </div>
+
+        <div id="flViewCard-South" class="free-left-card">
+          <h4>South Slip Lane (South ➔ East)</h4>
+          <div class="free-left-status-display">
+            <span>State:</span>
+            <span id="flViewBadge-South" class="free-left-badge active">ACTIVE</span>
+          </div>
+          <p id="flViewReason-South" style="font-size: 12px; color: var(--text-muted);">No pedestrians in conflict zone. Safe free left flow.</p>
+        </div>
+
+        <div id="flViewCard-East" class="free-left-card">
+          <h4>East Slip Lane (East ➔ North)</h4>
+          <div class="free-left-status-display">
+            <span>State:</span>
+            <span id="flViewBadge-East" class="free-left-badge active">ACTIVE</span>
+          </div>
+          <p id="flViewReason-East" style="font-size: 12px; color: var(--text-muted);">No pedestrians in conflict zone. Safe free left flow.</p>
+        </div>
+
+        <div id="flViewCard-West" class="free-left-card">
+          <h4>West Slip Lane (West ➔ South)</h4>
+          <div class="free-left-status-display">
+            <span>State:</span>
+            <span id="flViewBadge-West" class="free-left-badge active">ACTIVE</span>
+          </div>
+          <p id="flViewReason-West" style="font-size: 12px; color: var(--text-muted);">No pedestrians in conflict zone. Safe free left flow.</p>
+        </div>
+      </div>
+
+      <!-- FREE-LEFT RULES MATRIX -->
+      <div class="kpi-card">
+        <h3 style="font-size: 16px; margin-bottom: 12px;">🛡️ Free-Left Safety Interlock Matrix</h3>
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th>Condition</th>
+              <th>Slip Signal State</th>
+              <th>Vehicle Action</th>
+              <th>Safety Justification</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Pedestrians inside crosswalk</td>
+              <td><span class="free-left-badge blocked">🔴 BLOCKED</span></td>
+              <td>Full Stop behind line</td>
+              <td>Eliminates pedestrian knockdown risk during crossing.</td>
+            </tr>
+            <tr>
+              <td>Pedestrians waiting at curb (1-3)</td>
+              <td><span class="free-left-badge controlled">🟡 CONTROLLED</span></td>
+              <td>Speed limited to 15 km/h</td>
+              <td>Yield to crossing intent before turn completion.</td>
+            </tr>
+            <tr>
+              <td>Emergency corridor active on conflict</td>
+              <td><span class="free-left-badge blocked">🔴 BLOCKED</span></td>
+              <td>Halt until corridor clears</td>
+              <td>Prevents accidental side-impact with high-speed ambulance.</td>
+            </tr>
+            <tr>
+              <td>Clear zebra + low merge conflict</td>
+              <td><span class="free-left-badge active">🟢 ACTIVE</span></td>
+              <td>Continuous free-flow</td>
+              <td>Maximizes junction discharge rate and minimizes fuel idling.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         VIEW 5: PEDESTRIAN & CROWD MANAGEMENT
+         ==================================================================== -->
+    <section id="view-pedestrians" class="view-section">
+      <div class="view-header">
+        <div>
+          <h2>🚶 Crowd-Aware Pedestrian Priority Management</h2>
+          <p>Sensor/camera crowd estimation with dynamic crossing times (20s to 60s) and safety clearance extensions.</p>
+        </div>
+        <button class="btn-primary" onclick="window.appController.loadScenario(4)">Trigger Festival Crowd Surge</button>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi-card pedestrian-accent">
+          <div class="kpi-header"><span class="kpi-title">Active Crossing Crowd</span><span>🚶</span></div>
+          <div class="kpi-value-row"><span id="pedActiveCrossCount" class="kpi-value">0</span><span class="kpi-unit">Pedestrians</span></div>
+          <div class="kpi-trend">Crosswalk Telemetry</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-header"><span class="kpi-title">Max Waiting Congregation</span><span>👥</span></div>
+          <div class="kpi-value-row"><span id="pedMaxWaitCrowd" class="kpi-value">0</span><span class="kpi-unit">People</span></div>
+          <div class="kpi-trend">Congregation Queue</div>
+        </div>
+        <div class="kpi-card safety-accent">
+          <div class="kpi-header"><span class="kpi-title">Dynamic Crossing Tier</span><span>⏱️</span></div>
+          <div class="kpi-value-row"><span id="pedDynamicTierBadge" class="kpi-value" style="font-size: 20px;">Tier 1: 20s</span></div>
+          <div class="kpi-trend">Crowd-Scaled Duration</div>
+        </div>
+      </div>
+
+      <div class="kpi-card" style="margin-top: 20px;">
+        <h3 style="font-size: 16px; margin-bottom: 12px;">📊 Dynamic Pedestrian Crossing Duration Policy</h3>
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th>Crowd Size Category</th>
+              <th>Headcount</th>
+              <th>Dynamic Green Duration</th>
+              <th>Slip Lane Protocol</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>🟢 Low Crowd</td>
+              <td>&lt; 15 Pedestrians</td>
+              <td><strong>20 seconds</strong></td>
+              <td>Controlled Yield</td>
+            </tr>
+            <tr>
+              <td>🟡 Medium Crowd</td>
+              <td>15 – 35 Pedestrians</td>
+              <td><strong>30 seconds</strong></td>
+              <td>Blocked during crossing</td>
+            </tr>
+            <tr>
+              <td>🟠 High Crowd (Rush)</td>
+              <td>36 – 70 Pedestrians</td>
+              <td><strong>40 seconds</strong></td>
+              <td>Blocked + Approach hold</td>
+            </tr>
+            <tr>
+              <td>🔴 Very High (Festival / Religious)</td>
+              <td>70+ Pedestrians</td>
+              <td><strong>50 – 60 seconds</strong></td>
+              <td>All-Red Scramble Phase</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         VIEW 6: EMERGENCY MANAGEMENT
+         ==================================================================== -->
+    <section id="view-emergency" class="view-section">
+      <div class="view-header">
+        <div>
+          <h2>🚑 Emergency Corridor Command Center</h2>
+          <p>Instant siren response for Ambulances and Fire Engines with safety-aware pedestrian clearance protocols.</p>
+        </div>
+        <button id="btnClearEmergency" class="btn-secondary">Clear Emergency Override</button>
+      </div>
+
+      <div class="comparison-container">
+        <div class="comparison-box emergency-accent">
+          <h3 style="font-size: 16px; margin-bottom: 12px; color: #f87171;">🚨 Emergency Dispatch Trigger</h3>
+          <div class="form-group">
+            <label class="form-label">Incoming Approach Corridor:</label>
+            <select id="emergApproachSelect" class="form-control">
+              <option value="South">South Approach (Hospital Route)</option>
+              <option value="North">North Approach</option>
+              <option value="East">East Approach</option>
+              <option value="West">West Approach</option>
+            </select>
+          </div>
+          <div style="display: flex; gap: 10px; margin-top: 14px;">
+            <button id="btnTriggerAmbulance" class="btn-danger">🚑 Deploy Ambulance</button>
+            <button id="btnTriggerFire" class="btn-danger" style="background: linear-gradient(135deg, #b91c1c, #991b1b);">🚒 Deploy Fire Engine</button>
+          </div>
+        </div>
+
+        <div class="comparison-box">
+          <h3 style="font-size: 16px; margin-bottom: 12px; color: #38bdf8;">🛡️ Safety Protocol Status</h3>
+          <div class="comparison-stat-row">
+            <span>Corridor Status:</span>
+            <div id="emergActiveStatus"><strong style="color: #10b981;">🟢 Standby</strong></div>
+          </div>
+          <div class="comparison-stat-row">
+            <span>Pedestrian Evacuation:</span>
+            <div id="emergClearanceStatus"><span>Ready</span></div>
+          </div>
+          <div style="margin-top: 14px; font-size: 12px; color: var(--text-muted); line-height: 1.5;">
+            <strong>AI Safety Rule:</strong> If pedestrians are currently mid-crossing when an emergency arrives, signals do NOT abruptly switch. A 5-second audible evacuation countdown executes safely first!
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         VIEW 7: EVENT MANAGEMENT
+         ==================================================================== -->
+    <section id="view-events" class="view-section">
+      <div class="view-header">
+        <div>
+          <h2>📅 Event & Festival Traffic Management</h2>
+          <p>Schedule religious gatherings, festivals, stadium matches, and market days for predictive traffic preparation.</p>
+        </div>
+        <button id="btnOpenEventModal" class="btn-primary">➕ Register New Event</button>
+      </div>
+
+      <div class="kpi-card">
+        <h3 style="font-size: 16px; margin-bottom: 12px;">Active & Scheduled City Events</h3>
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th>Event Name</th>
+              <th>Type</th>
+              <th>Schedule</th>
+              <th>Location</th>
+              <th>Expected Crowd</th>
+              <th>Expected PCU</th>
+              <th>Traffic Strategy</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="eventsTableBody">
+            <!-- Dynamically populated from SQLite -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         VIEW 8: PREDICTION ENGINE
+         ==================================================================== -->
+    <section id="view-prediction" class="view-section">
+      <div class="view-header">
+        <div>
+          <h2>🔮 AI Traffic & Congestion Prediction Engine</h2>
+          <p>Multi-horizon forecasting (+5m, +15m, +30m) enabling proactive signal adjustments before gridlock forms.</p>
+        </div>
+        <button class="btn-primary" onclick="window.appController.loadScenario(11)">Trigger Predicted Surge</button>
+      </div>
+
+      <div id="predictionAlertBanner" class="advisor-banner" style="background: rgba(249, 115, 22, 0.15); border-color: #f97316; display: none;">
+        <strong>⚠️ HIGH CONGESTION PREDICTED</strong>
+      </div>
+
+      <div class="prediction-cards-grid">
+        <!-- +5 min horizon -->
+        <div class="prediction-card">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+            <span style="font-weight: 700; color: var(--color-cyan);">HORIZON: +5 MINUTES</span>
+            <span id="predTime-5m" style="font-family: var(--font-mono); font-size: 12px;">12:05</span>
+          </div>
+          <div class="comparison-stat-row">
+            <span>Primary Bottleneck:</span>
+            <strong id="predBottleneck-5m">East Approach</strong>
+          </div>
+          <div class="comparison-stat-row">
+            <span>Congestion Probability:</span>
+            <strong id="predProb-5m" style="color: #f59e0b;">68% Probability</strong>
+          </div>
+          <h5 style="margin-top: 14px; font-size: 12px; color: var(--text-muted);">Proactive Mitigations:</h5>
+          <ul id="predRecs-5m" style="list-style: none; font-size: 12px; color: #cbd5e1; margin-top: 6px;"></ul>
+        </div>
+
+        <!-- +15 min horizon -->
+        <div class="prediction-card horizon-alert">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+            <span style="font-weight: 700; color: #f97316;">HORIZON: +15 MINUTES</span>
+            <span id="predTime-15m" style="font-family: var(--font-mono); font-size: 12px;">12:15</span>
+          </div>
+          <div class="comparison-stat-row">
+            <span>Primary Bottleneck:</span>
+            <strong id="predBottleneck-15m">East Approach</strong>
+          </div>
+          <div class="comparison-stat-row">
+            <span>Congestion Probability:</span>
+            <strong id="predProb-15m" style="color: #ef4444;">82% Probability</strong>
+          </div>
+          <h5 style="margin-top: 14px; font-size: 12px; color: var(--text-muted);">Proactive Mitigations:</h5>
+          <ul id="predRecs-15m" style="list-style: none; font-size: 12px; color: #cbd5e1; margin-top: 6px;"></ul>
+        </div>
+
+        <!-- +30 min horizon -->
+        <div class="prediction-card">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+            <span style="font-weight: 700; color: #a855f7;">HORIZON: +30 MINUTES</span>
+            <span id="predTime-30m" style="font-family: var(--font-mono); font-size: 12px;">12:30</span>
+          </div>
+          <div class="comparison-stat-row">
+            <span>Primary Bottleneck:</span>
+            <strong id="predBottleneck-30m">South Approach</strong>
+          </div>
+          <div class="comparison-stat-row">
+            <span>Congestion Probability:</span>
+            <strong id="predProb-30m" style="color: #f59e0b;">55% Probability</strong>
+          </div>
+          <h5 style="margin-top: 14px; font-size: 12px; color: var(--text-muted);">Proactive Mitigations:</h5>
+          <ul id="predRecs-30m" style="list-style: none; font-size: 12px; color: #cbd5e1; margin-top: 6px;"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         VIEW 9: ANALYTICS & TRENDS
+         ==================================================================== -->
+    <section id="view-analytics" class="view-section">
+      <div class="view-header">
+        <div>
+          <h2>📈 Smart City Analytics & Historical Telemetry</h2>
+          <p>Real-time vehicle volumes, mixed fleet breakdown, directional density radar, and Normal vs Festival day comparisons.</p>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 20px;">
+        <div class="kpi-card" style="height: 320px;">
+          <h4 style="font-size: 14px; margin-bottom: 10px;">Vehicle Volume Over Time (PCU)</h4>
+          <div style="height: 250px;"><canvas id="chartVolumeHistory"></canvas></div>
+        </div>
+        <div class="kpi-card" style="height: 320px;">
+          <h4 style="font-size: 14px; margin-bottom: 10px;">Indian Mixed Fleet Breakdown</h4>
+          <div style="height: 250px;"><canvas id="chartVehicleTypes"></canvas></div>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px;">
+        <div class="kpi-card" style="height: 300px;">
+          <h4 style="font-size: 14px; margin-bottom: 10px;">Directional Density Comparison (%)</h4>
+          <div style="height: 230px;"><canvas id="chartApproachDensity"></canvas></div>
+        </div>
+        <div class="kpi-card" style="height: 300px;">
+          <h4 style="font-size: 14px; margin-bottom: 10px;">Pedestrian Crowd Trends</h4>
+          <div style="height: 230px;"><canvas id="chartPedestrianTrends"></canvas></div>
+        </div>
+      </div>
+
+      <!-- NORMAL VS FESTIVAL ANALYTICS SUMMARY TABLE -->
+      <div class="kpi-card">
+        <h3 style="font-size: 16px; margin-bottom: 12px;">📊 Normal Day vs Festival Day Comparative Analytics</h3>
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th>Evaluation Parameter</th>
+              <th>Normal Weekday</th>
+              <th>Festival / Religious Event</th>
+              <th>Unit / Metric</th>
+            </tr>
+          </thead>
+          <tbody id="festivalComparisonTableBody">
+            <!-- Populated via API -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         VIEW 10: SIMULATION SANDBOX
+         ==================================================================== -->
+    <section id="view-simulation" class="view-section">
+      <div class="view-header">
+        <div>
+          <h2>🎮 Traffic Simulation Sandbox Controls</h2>
+          <p>Manual vehicle injection, crowd generators, speed controls, and mode overrides for full testing.</p>
+        </div>
+      </div>
+
+      <div class="comparison-container">
+        <!-- Spawner Controls -->
+        <div class="comparison-box">
+          <h3 style="font-size: 16px; margin-bottom: 12px;">🚗 Inject Mixed Vehicles</h3>
+          <div class="form-group">
+            <label class="form-label">Target Approach:</label>
+            <select id="spawnApproachSelect" class="form-control">
+              <option value="North">North Approach</option>
+              <option value="South">South Approach</option>
+              <option value="East">East Approach</option>
+              <option value="West">West Approach</option>
+            </select>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px;">
+            <button class="btn-secondary" data-spawn-type="twowheeler">🏍️ +2-Wheeler</button>
+            <button class="btn-secondary" data-spawn-type="car">🚗 +Car</button>
+            <button class="btn-secondary" data-spawn-type="auto">🛺 +Auto-Rickshaw</button>
+            <button class="btn-secondary" data-spawn-type="bus">🚌 +Bus</button>
+            <button class="btn-secondary" data-spawn-type="truck">🚚 +Truck</button>
+            <button class="btn-danger" data-spawn-type="ambulance">🚑 +Ambulance</button>
+          </div>
+
+          <h4 style="font-size: 14px; margin-top: 20px; margin-bottom: 10px;">🚶 Inject Pedestrian Crowd</h4>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn-secondary" data-spawn-ped="5">+5 Pedestrians</button>
+            <button class="btn-secondary" data-spawn-ped="25">+25 Medium Crowd</button>
+            <button class="btn-secondary" data-spawn-ped="75">+75 Festival Surge</button>
+          </div>
+        </div>
+
+        <!-- Global Strategy Mode -->
+        <div class="comparison-box">
+          <h3 style="font-size: 16px; margin-bottom: 12px;">⚙️ Global Traffic Strategy Mode</h3>
+          <div class="form-group">
+            <label class="form-label">Active Scenario Mode:</label>
+            <select id="globalModeSelect" class="form-control">
+              <option value="NORMAL">Normal Weekday Mode</option>
+              <option value="WEEKEND">Weekend Market Mode</option>
+              <option value="FESTIVAL">Festival Mode (Crowd Aware)</option>
+              <option value="RELIGIOUS">Religious Gathering Mode</option>
+              <option value="PUBLIC_EVENT">Public Event / Stadium Surge</option>
+              <option value="PEAK_HOUR">Peak Hour Commuter Rush</option>
+            </select>
+          </div>
+          <div style="margin-top: 20px;">
+            <button class="btn-secondary" onclick="window.appController.loadScenario(1)">🔄 Reset Simulation to Default</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         VIEW 11: PERFORMANCE REPORTS (BEFORE VS AFTER)
+         ==================================================================== -->
+    <section id="view-reports" class="view-section">
+      <div class="view-header">
+        <div>
+          <h2>📋 Performance Reports: Traditional Signal vs AI Adaptive System</h2>
+          <p>Scientific before-and-after comparison demonstrating measurable congestion and safety improvements.</p>
+        </div>
+        <button id="btnPrintReport" class="btn-primary">🖨️ Export / Print Report</button>
+      </div>
+
+      <div class="comparison-container">
+        <!-- Traditional System -->
+        <div class="comparison-box traditional">
+          <h3 style="font-size: 18px; margin-bottom: 14px; color: #f87171;">🛑 Traditional Fixed-Timer Signal</h3>
+          <div class="comparison-stat-row"><span>Average Waiting Time:</span><strong id="compTradWait">68.0s</strong></div>
+          <div class="comparison-stat-row"><span>Average Queue Length:</span><strong id="compTradQueue">17.0 vehs</strong></div>
+          <div class="comparison-stat-row"><span>Pedestrian Priority:</span><span id="compTradPed">Fixed 20s or ignored</span></div>
+          <div class="comparison-stat-row"><span>Emergency Preemption:</span><span id="compTradEmerg">None (Forced wait)</span></div>
+          <div class="comparison-stat-row"><span>Dynamic Free-Left:</span><span id="compTradFL">Unmonitored (Accidents)</span></div>
+          <div class="comparison-stat-row"><span>Safety Score:</span><strong id="compTradSafety" style="color: #ef4444;">58/100</strong></div>
+        </div>
+
+        <!-- AI Adaptive System -->
+        <div class="comparison-box ai-adaptive">
+          <h3 style="font-size: 18px; margin-bottom: 14px; color: #34d399;">🟢 AI Adaptive Smart Management</h3>
+          <div class="comparison-stat-row"><span>Average Waiting Time:</span><strong id="compAiWait" style="color: #34d399;">24.0s</strong></div>
+          <div class="comparison-stat-row"><span>Average Queue Length:</span><strong id="compAiQueue" style="color: #34d399;">5.0 vehs</strong></div>
+          <div class="comparison-stat-row"><span>Pedestrian Priority:</span><span id="compAiPed" style="color: #c084fc;">Dynamic (20s - 60s)</span></div>
+          <div class="comparison-stat-row"><span>Emergency Preemption:</span><span id="compAiEmerg" style="color: #60a5fa;">Automated 35s Corridor</span></div>
+          <div class="comparison-stat-row"><span>Dynamic Free-Left:</span><span id="compAiFL" style="color: #34d399;">Smart Active/Block</span></div>
+          <div class="comparison-stat-row"><span>Safety Score:</span><strong id="compAiSafety" style="color: #34d399;">95/100</strong></div>
+        </div>
+      </div>
+
+      <!-- IMPROVEMENT BADGES ROW -->
+      <div class="improvement-badge-row">
+        <div class="improvement-pill">
+          <div id="impWaitPct" class="improvement-pct">-45%</div>
+          <div class="improvement-label">Waiting Time Reduction</div>
+        </div>
+        <div class="improvement-pill">
+          <div id="impQueuePct" class="improvement-pct">-52%</div>
+          <div class="improvement-label">Queue Length Reduction</div>
+        </div>
+        <div class="improvement-pill">
+          <div id="impSafetyPct" class="improvement-pct">+82%</div>
+          <div class="improvement-label">Pedestrian Safety Gain</div>
+        </div>
+        <div class="improvement-pill">
+          <div id="impThroughputPct" class="improvement-pct">+38%</div>
+          <div class="improvement-label">Junction Throughput Gain</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         VIEW 12: SYSTEM SETTINGS & PCU CALIBRATION
+         ==================================================================== -->
+    <section id="view-settings" class="view-section">
+      <div class="view-header">
+        <div>
+          <h2>🛠️ System Settings & PCU Calibration</h2>
+          <p>Configure Passenger Car Unit (PCU) weights, signal constraints, and inspect hardware sensor APIs.</p>
+        </div>
+      </div>
+
+      <div class="comparison-container">
+        <!-- PCU Form -->
+        <div class="comparison-box">
+          <h3 style="font-size: 16px; margin-bottom: 14px;">🎛️ Configurable PCU Weights</h3>
+          <form id="settingsForm">
+            <div class="form-group">
+              <label class="form-label">Two-Wheeler Weight (Motorcycles/Scooters):</label>
+              <input type="number" step="0.1" id="settingPcu2w" class="form-control" value="0.5">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Standard Car Weight:</label>
+              <input type="number" step="0.1" id="settingPcuCar" class="form-control" value="1.0">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Auto-Rickshaw Weight (3-Wheeler):</label>
+              <input type="number" step="0.1" id="settingPcuAuto" class="form-control" value="1.0">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Public Bus Weight:</label>
+              <input type="number" step="0.1" id="settingPcuBus" class="form-control" value="3.0">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Commercial Truck Weight:</label>
+              <input type="number" step="0.1" id="settingPcuTruck" class="form-control" value="3.0">
+            </div>
+
+            <h4 style="font-size: 14px; margin-top: 18px; margin-bottom: 10px;">⏱️ Timing Constraints</h4>
+            <div class="form-group">
+              <label class="form-label">Min Green Duration (sec):</label>
+              <input type="number" id="settingMinGreen" class="form-control" value="15">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Max Green Duration (sec):</label>
+              <input type="number" id="settingMaxGreen" class="form-control" value="75">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Yellow Phase (sec):</label>
+              <input type="number" id="settingYellow" class="form-control" value="3">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Anti-Starvation Threshold (sec):</label>
+              <input type="number" id="settingStarve" class="form-control" value="75">
+            </div>
+
+            <button type="submit" class="btn-primary" style="margin-top: 10px;">💾 Save & Apply Parameters</button>
+          </form>
+        </div>
+
+        <!-- Hardware Sensor Architecture -->
+        <div class="comparison-box">
+          <h3 style="font-size: 16px; margin-bottom: 14px; color: var(--color-cyan);">📡 Sensor & Hardware CCTV Integration</h3>
+          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 12px;">
+            The platform provides RESTful telemetry endpoints for direct hardware connection with IP CCTV cameras, YOLOv11 Edge servers, ESP32 microcontrollers, or ultrasonic roadway loops.
+          </p>
+          <div style="background: rgba(0,0,0,0.5); padding: 12px; border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 11px; color: #a5f3fc; line-height: 1.6;">
+            <strong>POST /api/sensor/telemetry</strong><br>
+            Content-Type: application/json<br><br>
+            {<br>
+            &nbsp;&nbsp;"approach": "North",<br>
+            &nbsp;&nbsp;"detected_vehicles": {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;"twowheeler": 8,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;"car": 4,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;"auto": 3,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;"bus": 1<br>
+            &nbsp;&nbsp;},<br>
+            &nbsp;&nbsp;"detected_pedestrians": 14<br>
+            }
+          </div>
+          <div style="margin-top: 14px; font-size: 12px; color: var(--text-dim);">
+            ✔ Ready for OpenCV / YOLOv11 video stream feeding.<br>
+            ✔ Fully compatible with Arduino &amp; ESP32 IoT beacons.
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- EVENT REGISTRATION MODAL -->
+  <div id="eventModal" class="modal-overlay">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 style="font-size: 16px;">➕ Register Scheduled City Event</h3>
+        <button id="btnCloseEventModal" class="modal-close">✕</button>
+      </div>
+      <form id="eventForm">
+        <div class="form-group">
+          <label class="form-label">Event Name:</label>
+          <input type="text" id="evName" class="form-control" required placeholder="e.g. Diwali Shopping Rush">
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+          <div class="form-group">
+            <label class="form-label">Event Type:</label>
+            <select id="evType" class="form-control">
+              <option value="Festival">Festival</option>
+              <option value="Religious">Religious</option>
+              <option value="Stadium">Stadium</option>
+              <option value="Market">Market</option>
+              <option value="School">School</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Strategy Mode:</label>
+            <select id="evMode" class="form-control">
+              <option value="FESTIVAL">FESTIVAL</option>
+              <option value="RELIGIOUS">RELIGIOUS</option>
+              <option value="PUBLIC_EVENT">PUBLIC_EVENT</option>
+              <option value="PEAK_HOUR">PEAK_HOUR</option>
+            </select>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
+          <div class="form-group">
+            <label class="form-label">Date:</label>
+            <input type="date" id="evDate" class="form-control" value="2026-10-15">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Start Time:</label>
+            <input type="time" id="evStart" class="form-control" value="18:00">
+          </div>
+          <div class="form-group">
+            <label class="form-label">End Time:</label>
+            <input type="time" id="evEnd" class="form-control" value="23:30">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Location / Junction Arm:</label>
+          <input type="text" id="evLocation" class="form-control" value="Central Temple Junction">
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+          <div class="form-group">
+            <label class="form-label">Expected Crowd:</label>
+            <input type="number" id="evCrowd" class="form-control" value="3500">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Expected Vehicles (PCU):</label>
+            <input type="number" id="evVehicles" class="form-control" value="1500">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Notes:</label>
+          <input type="text" id="evNotes" class="form-control" placeholder="Special traffic management notes">
+        </div>
+        <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;">Save & Schedule Event</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- APPLICATION SCRIPTS -->
+  <script src="/static/js/junction_canvas.js"></script>
+  <script src="/static/js/ai_decisions.js"></script>
+  <script src="/static/js/analytics_charts.js"></script>
+  <script src="/static/js/demo_tour.js"></script>
+  <script src="/static/js/dashboard.js"></script>
+</body>
+</html>
